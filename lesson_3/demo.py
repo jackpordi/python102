@@ -23,6 +23,7 @@ def example2():
     else:
         return float(user_input) + example2()
 
+
 def example3(numbers):
 
     pairs = []
@@ -78,7 +79,7 @@ def blackjack():
                 print("Ok, go home, your hand value is")
                 print(value(hand))
 
-
     print("Game is over!")
+
 
 blackjack()
