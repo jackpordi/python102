@@ -22,6 +22,7 @@ class RockPaperScissors:
         else:
             print("Player Two Wins!")
 
+
 class HumanPlayer:
 
     def __init__(self):
@@ -36,7 +37,9 @@ class HumanPlayer:
 
         return move_list[int(input("Please select a move:  ")) - 1]
 
+
 import random
+
 
 class RandomPlayer:
 
