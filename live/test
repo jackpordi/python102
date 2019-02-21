@@ -1,0 +1,9 @@
+example2(), input "5"
+
+5.0  + example2()
+
+input "11"
+
+5 + (11 + example2())
+
+5 + 11 + 0
