@@ -29,6 +29,3 @@ jack1 = Person("Jack", 21)
 jack2 = Person("Jack", 22)
 
 print(jack1 == jack2)
-
-game = RockPaperScissors()
-game.play()
