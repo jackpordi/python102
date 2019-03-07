@@ -3,7 +3,6 @@ import pandas as pd
 
 from matplotlib import pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.preprocessing import OneHotEncoder
 from keras.models import Sequential
 from keras.layers.core import Dense, Activation
 
@@ -46,32 +45,16 @@ def jitter_plot(data, x, y, colorby=None):
     if colorby is None:
         plt.scatter(x_data, y_data, alpha=0.3)
     else:
-        print('Here!')
         plt.scatter(x_data, y_data, c=data[colorby], cmap='bwr', alpha=0.3)
     plt.xlabel(x)
     plt.ylabel(y)
     plt.show()
     plt.clf()
 
-jitter_plot(df, 'chocolate', 'nicotine', colorby='severity')
-exit(1)
+# jitter_plot(df, 'chocolate', 'nicotine', colorby='severity')
 
 # We need to now 'prepare' the data
 
-
-race_df = pd.get_dummies(df['ethnicity'], prefix='race')
-df = df.drop('ethnicity', axis=1)
-df = df.join(race_df)
-
-country_df = pd.get_dummies(df['country'], prefix='country')
-df = df.drop('country', axis=1)
-df = df.join(country_df)
-
-
-df['gender'] = df['gender'].map({
-    'male':  0,
-    'female': 1
-})
 
 df['agegroup'] = df['agegroup'].map({
     '18-24':  0,
@@ -81,6 +64,19 @@ df['agegroup'] = df['agegroup'].map({
     '55-64': 4,
     '65+': 5
 })
+
+df['gender'] = df['gender'].map({
+    'male':  0,
+    'female': 1
+})
+
+race_df = pd.get_dummies(df['ethnicity'], prefix='race')
+df = df.drop('ethnicity', axis=1)
+df = df.join(race_df)
+
+country_df = pd.get_dummies(df['country'], prefix='country')
+df = df.drop('country', axis=1)
+df = df.join(country_df)
 
 # print(df)
 
@@ -121,5 +117,6 @@ results = pd.DataFrame({
 
 print(results)
 
-root_mean_squared_error = (sum([(x - y) ** 2 for x, y in zip(pred_y, test_y)]) ** 0.5) / len(results)
+# root_mean_squared_error = (sum([(x - y) ** 2 for x, y in zip(pred_y, test_y)]) ** 0.5) / len(results)
+root_mean_squared_error = np.sqrt(sum((pred_y - test_y) ** 2) / len(results))
 print('Root Mean Squared Error:', root_mean_squared_error)
