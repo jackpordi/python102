@@ -4,6 +4,8 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import OneHotEncoder
+from keras.models import Sequential
+from keras.layers.core import Dense, Activation
 
 # Read the CSV
 df = pd.read_csv('./druguse.csv')
@@ -84,13 +86,18 @@ test_set = df.iloc[1500:]
 test_x = test_set.drop('severity', axis=1).values
 test_y = test_set['severity'].values
 
-print(train_x)
+print(train_x.shape)
 print(train_y)
 
-rf = RandomForestRegressor()
-rf.fit(train_x, train_y)
+exit()
 
-pred_y = rf.predict(test_x)
+# rf = RandomForestRegressor()
+# rf.fit(train_x, train_y)
+
+# pred_y = rf.predict(test_x)
+
+model = Sequential()
+# model.add(Dense())
 
 results = pd.DataFrame({
     'predictions': pred_y,
