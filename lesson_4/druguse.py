@@ -39,16 +39,22 @@ print(df)
 print(df.columns.values)
 
 
-def jitter_plot(data, x, y):
+def jitter_plot(data, x, y, colorby=None):
     x_data = data[x].values + (np.random.rand(len(data)) * 0.5)
     y_data = data[y].values + (np.random.rand(len(data)) * 0.5)
-    plt.scatter(x_data, y_data, alpha=0.3)
+
+    if colorby is None:
+        plt.scatter(x_data, y_data, alpha=0.3)
+    else:
+        print('Here!')
+        plt.scatter(x_data, y_data, c=data[colorby], cmap='bwr', alpha=0.3)
     plt.xlabel(x)
     plt.ylabel(y)
     plt.show()
     plt.clf()
 
-# jitter_plot(df, 'chocolate', 'nicotine')
+jitter_plot(df, 'chocolate', 'nicotine', colorby='severity')
+exit(1)
 
 # We need to now 'prepare' the data
 
@@ -89,7 +95,6 @@ test_y = test_set['severity'].values
 print(train_x.shape)
 print(train_y)
 
-exit()
 
 # rf = RandomForestRegressor()
 # rf.fit(train_x, train_y)
@@ -97,7 +102,16 @@ exit()
 # pred_y = rf.predict(test_x)
 
 model = Sequential()
-# model.add(Dense())
+model.add(Dense(32, input_shape=(28,), activation='relu'))
+model.add(Dense(64, activation='relu'))
+model.add(Dense(64, activation='relu'))
+model.add(Dense(1))
+model.compile(optimizer='adam', loss='mean_squared_error')
+model.fit(train_x, train_y, nb_epoch=100, batch_size=1)
+
+pred_y = model.predict(test_x).reshape(len(test_x))
+# print(pred_y)
+# print(pred_y.shape)
 
 results = pd.DataFrame({
     'predictions': pred_y,
