@@ -1,16 +1,18 @@
 import json
 
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, send_from_directory
 from datetime import datetime
 
 messages = []
 # Message format is timestamp, name, message
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/website')
 
-@app.route('/home', methods=['GET'])
-def home():
-    return render_template('./website/index.html')
+
+@app.route('/<path:path>', methods=['GET'])
+@app.route('/', defaults={'path': 'index.html'})
+def home(path='index.html'):
+    return send_from_directory('website', path)
 
 @app.route('/hello', methods=['GET'])
 def hello():
