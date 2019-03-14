@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from datetime import datetime
 
 messages = []
@@ -8,6 +8,9 @@ messages = []
 
 app = Flask(__name__)
 
+@app.route('/home', methods=['GET'])
+def home():
+    return render_template('./website/index.html')
 
 @app.route('/hello', methods=['GET'])
 def hello():
